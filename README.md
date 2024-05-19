@@ -1,16 +1,20 @@
 # todo_concept
 
-A new Flutter project.
+A todo application built using Flutter
 
-## Getting Started
+### Functionality to test
 
-This project is a starting point for a Flutter application.
+Functionality, user should be able to:
 
-A few resources to get you started if this is your first Flutter project:
+    - [ ] Check/Uncheck existing tasks
+    - [ ] Add new tasks
+    - [ ] Edit existing tasks
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Simple Code Structure
+
+The code is organized in the `./lib` folder following best practices easier maintainability. Here's the structure:
+
+    - `lib/repositories`: Contains epositories (interfaces for data access).
+    - `lib/domain`: Holds the BLoC patter in `./bloc`, business logic, entities and stores data models (`./models`)
+    - `lib/presentation`: Contains UI widgets (TodoList, AddTodoScreen).
