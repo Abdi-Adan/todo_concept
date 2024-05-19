@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:todo_concept/domain/bloc/todo_event.dart';
-import 'package:todo_concept/domain/bloc/todo_state.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_event.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_state.dart';
 import 'package:todo_concept/repositories/todo_repository.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {

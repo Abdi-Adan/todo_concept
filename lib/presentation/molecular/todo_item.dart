@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_concept/domain/bloc/todo_bloc.dart';
-import 'package:todo_concept/domain/bloc/todo_event.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_bloc.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_event.dart';
 import 'package:todo_concept/domain/models/todo.dart';
 
 class TodoItem extends StatelessWidget {

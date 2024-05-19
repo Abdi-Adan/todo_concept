@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_concept/domain/bloc/todo_bloc.dart';
-import 'package:todo_concept/domain/bloc/todo_event.dart';
-import 'package:todo_concept/domain/entities/app_constants.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_bloc.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_event.dart';
+import 'package:todo_concept/domain/blocs/user/user_bloc.dart';
+import 'package:todo_concept/domain/blocs/user/user_event.dart';
+import 'package:todo_concept/domain/blocs/user/user_state.dart';
+import 'package:todo_concept/domain/shared/app_constants.dart';
 import 'package:todo_concept/presentation/pages/todo_page.dart';
+import 'package:todo_concept/presentation/pages/user_page.dart';
 import 'package:todo_concept/repositories/todo_repository.dart';
 
 void main() async {
@@ -33,11 +37,29 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BlocProvider(
-        create: (context) =>
-            TodoBloc(todoRepository: todoRepository)..add(LoadTodos()),
-        child: const TodoPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              TodoBloc(todoRepository: todoRepository)..add(LoadTodos()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              UserBloc(todoRepository: todoRepository)..add(LoadUser()),
+        ),
+      ],
+      child: MaterialApp(
+        home: BlocBuilder<UserBloc, UserState>(
+          builder: (context, state) {
+            if (state is UserLoadInProgress) {
+              return const CircularProgressIndicator();
+            } else if (state is UserLoadSuccess) {
+              return const TodoPage();
+            } else {
+              return UserPage();
+            }
+          },
+        ),
       ),
     );
   }
