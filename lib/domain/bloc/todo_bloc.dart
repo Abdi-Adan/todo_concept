@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:todo_concept/domain/bloc/todo_event.dart';
 import 'package:todo_concept/domain/bloc/todo_state.dart';
-import 'package:todo_concept/domain/models/todo.dart';
 import 'package:todo_concept/repositories/todo_repository.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
@@ -20,28 +19,24 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
     on<AddTodo>((event, emit) async {
       if (state is TodoLoadSuccess) {
-        final List<Todo> updatedTodos =
-            List.from((state as TodoLoadSuccess).todos)..add(event.todo);
+        await todoRepository.addTodo(event.todo);
+        final updatedTodos = await todoRepository.fetchTodos();
         emit(TodoLoadSuccess(updatedTodos));
       }
     });
 
     on<UpdateTodo>((event, emit) async {
       if (state is TodoLoadSuccess) {
-        final List<Todo> updatedTodos = (state as TodoLoadSuccess)
-            .todos
-            .map((todo) => todo.id == event.todo.id ? event.todo : todo)
-            .toList();
+        await todoRepository.updateTodo(event.todo);
+        final updatedTodos = await todoRepository.fetchTodos();
         emit(TodoLoadSuccess(updatedTodos));
       }
     });
 
     on<DeleteTodo>((event, emit) async {
       if (state is TodoLoadSuccess) {
-        final updatedTodos = (state as TodoLoadSuccess)
-            .todos
-            .where((todo) => todo.id != event.id)
-            .toList();
+        await todoRepository.deleteTodo(event.id);
+        final updatedTodos = await todoRepository.fetchTodos();
         emit(TodoLoadSuccess(updatedTodos));
       }
     });

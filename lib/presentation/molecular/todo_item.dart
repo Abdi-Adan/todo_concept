@@ -26,6 +26,8 @@ class TodoItem extends StatelessWidget {
       trailing: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
+          ///TODO: Handle editting todo
+          ///TODO: Handle deleting todo item
           context.read<TodoBloc>().add(DeleteTodo(todo.id));
         },
       ),

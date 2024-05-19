@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_concept/domain/bloc/todo_bloc.dart';
 import 'package:todo_concept/domain/bloc/todo_event.dart';
 import 'package:todo_concept/domain/entities/app_constants.dart';
-import 'package:todo_concept/presentation/pages/todo_concept_app.dart';
+import 'package:todo_concept/presentation/pages/todo_page.dart';
 import 'package:todo_concept/repositories/todo_repository.dart';
 
 void main() async {
@@ -21,6 +21,8 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final TodoRepository todoRepository = TodoRepository();
+  await todoRepository.init();
+
   runApp(TodoApp(todoRepository: todoRepository));
 }
 
@@ -35,7 +37,7 @@ class TodoApp extends StatelessWidget {
       home: BlocProvider(
         create: (context) =>
             TodoBloc(todoRepository: todoRepository)..add(LoadTodos()),
-        child: TodoPage(),
+        child: const TodoPage(),
       ),
     );
   }

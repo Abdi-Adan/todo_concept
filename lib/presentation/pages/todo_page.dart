@@ -7,9 +7,11 @@ import 'package:todo_concept/domain/models/todo.dart';
 import 'package:todo_concept/presentation/molecular/todo_item.dart';
 
 ///TODO: Add dialog/page to collect user's name and email
+///TODO: Handle To do list scrolling
 ///TODO: Improve UI Code to follow clean code principles
-// ignore: use_key_in_widget_constructors
 class TodoPage extends StatelessWidget {
+  const TodoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,7 @@ class TodoPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Handle adding new todo
+          ///TODO: Handle adding new todo
           final newTodo = Todo(
             id: DateTime.now().toString(),
             title: 'New Todo',
