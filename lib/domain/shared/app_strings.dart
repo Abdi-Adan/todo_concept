@@ -10,6 +10,12 @@ class AppStrings {
   static const enterEmailPrompt = 'Enter your email';
   static const enterEmailHint = 'example@example.com';
   static const saveText = 'Save';
+  static const doneText = 'Done';
+  static const editText = 'Edit';
+  static const addTodoTitle = 'Add New Task';
+  static const editTodoTitle = 'Edit Task';
+  static const addTodoPrompt = 'Task Name';
+  static const enterTaskPrompt = 'Enter your task';
   static const userDatahint =
       'Note: the data shared is not stored online but only on this device';
 }

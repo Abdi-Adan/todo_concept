@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_bloc.dart';
+import 'package:todo_concept/domain/blocs/todo/todo_event.dart';
 import 'package:todo_concept/domain/blocs/user/user_bloc.dart';
-import 'package:todo_concept/domain/blocs/user/user_event.dart';
 import 'package:todo_concept/domain/blocs/user/user_state.dart';
-import 'package:todo_concept/domain/models/user.dart';
+import 'package:todo_concept/domain/models/todo.dart';
 import 'package:todo_concept/domain/shared/app_strings.dart';
 import 'package:todo_concept/presentation/pages/todo_page.dart';
 
-class UserPage extends StatelessWidget {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+class AddTodoPage extends StatelessWidget {
+  final TextEditingController _titleController = TextEditingController();
 
-  UserPage({super.key});
+  AddTodoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class UserPage extends StatelessWidget {
           leading: const Icon(Icons.list, color: Colors.white),
           backgroundColor: const Color(0xff3556ab),
           title: const Text(
-            AppStrings.userPageTitle,
+            AppStrings.addTodoTitle,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -41,62 +41,47 @@ class UserPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Padding(
                   padding: EdgeInsets.only(top: 30, bottom: 30),
                   child: Text(
-                    AppStrings.userPageSubTitle,
+                    AppStrings.addTodoPrompt,
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
                 Expanded(
-                    child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: TextField(
-                        controller: _nameController,
-                        decoration: const InputDecoration(
-                          labelText: AppStrings.enterNamePrompt,
-                          hintText: AppStrings.enterNameHint,
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: TextField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      labelText: AppStrings.enterTaskPrompt,
+                      border: OutlineInputBorder(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: TextField(
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                          labelText: AppStrings.enterEmailPrompt,
-                          hintText: AppStrings.enterEmailHint,
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    AppStrings.userDatahint,
                   ),
-                ),
+                )),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        final user = User(
-                          name: _nameController.text,
-                          email: _emailController.text,
+                        final newTodo = Todo(
+                          id: DateTime.now().toString(),
+                          title: _titleController.text,
                         );
-                        context.read<UserBloc>().add(SaveUser(user));
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TodoPage()),
+                        );
+                        context.read<TodoBloc>().add(AddTodo(newTodo));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff3556ab),
@@ -106,8 +91,12 @@ class UserPage extends StatelessWidget {
                         ),
                       ),
                       child: const Text(
-                        AppStrings.saveText,
-                        style: TextStyle(color: Colors.white),
+                        AppStrings.doneText,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ),
